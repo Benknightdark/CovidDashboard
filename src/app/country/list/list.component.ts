@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient){
+    http.get('/api/covid19').subscribe(r=>{
+      console.log(r)
+    })
+  }
 
   ngOnInit(): void {
   }
