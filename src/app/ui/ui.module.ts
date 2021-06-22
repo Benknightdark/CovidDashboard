@@ -5,6 +5,10 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { AvatarModule } from "primeng/avatar";
+import { DashboardComponent } from './dashboard/dashboard.component';
+import {CardModule} from 'primeng/card';
+
 const routes: Routes = [
   {
     path: 'notfound',
@@ -15,6 +19,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     NotFoundComponent,
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
@@ -22,9 +27,10 @@ const routes: Routes = [
     ToolbarModule,
     ButtonModule,
     SplitButtonModule,
+    AvatarModule,CardModule
   ],
   exports: [RouterModule, ToolbarModule,
     ButtonModule,
-    SplitButtonModule,]
+    SplitButtonModule,AvatarModule,CardModule]
 })
 export class UiModule { }
