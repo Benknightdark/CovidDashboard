@@ -8,12 +8,15 @@ import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 import fetch from 'cross-fetch';
-// The Express app is exported so that it can be used by serverless Functions.
+const fetcher = async (url: string | '') => {
+  const reqData = await fetch(`https://api.covid19api.com/${url}`)
+  const resData = await reqData.json();
+  return resData;
+}
 export function app(): express.Express {
   const server = express();
   const distFolder = join(process.cwd(), 'dist/CovidDashboard/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
-
   server.engine('html', ngExpressEngine({
     bootstrap: AppServerModule,
   }));
@@ -21,10 +24,27 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
-  // Express Rest API endpoints
+  // List all the current routes available with detail on each.
   server.get('/api/covid19', async (req, res) => {
-    const reqData = await fetch('https://api.covid19api.com/')
-    const resData = await reqData.json();
+    const resData = await fetcher('')
+    res.json(resData);
+  })
+
+  // A summary of new and total cases per country updated daily.
+  server.get('/api/covid19/summary', async (req, res) => {
+    const resData = await fetcher('summary')
+    res.json(resData);
+  })
+
+  // Returns all the available countries and provinces, as well as the country slug for per country requests.
+  server.get('/api/covid19/countries', async (req, res) => {
+    const resData = await fetcher('countries')
+    res.json(resData);
+  })
+
+  // Returns all cases by case type for a country. Country must be the slug from /countries or /summary. Cases must be one of: confirmed, recovered, deaths
+  server.get('/api/covid19/countries', async (req, res) => {
+    const resData = await fetcher(`/total/country${req.query['slug']}`)
     res.json(resData);
   })
   // Serve static files from /browser
