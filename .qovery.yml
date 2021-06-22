@@ -1,0 +1,11 @@
+---
+application:
+  name: "coviddashboard"
+  project: "covoid19-dashboard"
+  organization: "QoveryCommunity"
+routers:
+- name: "main-coviddashboard"
+  routes:
+  - application_name: "coviddashboard"
+    paths:
+    - "/*"
