@@ -33,6 +33,11 @@ export function app(): express.Express {
   server.get('*', (req, res) => {
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
+  server.get('/api/covid19',async (req,res)=>{
+    const reqData=await fetch('https://api.covid19api.com/')
+    const resData=await reqData.json();
+    res.json(resData);
+  })
 
   return server;
 }

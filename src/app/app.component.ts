@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  constructor(private http: HttpClient){
+    http.get('https://api.covid19api.com/').subscribe(r=>{
+      console.log(r)
+    })
+  }
   title = 'CovidDashboard';
 }
