@@ -9,6 +9,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 import fetch from 'cross-fetch';
 const fetcher = async (url: string | '') => {
+  console.log(`https://api.covid19api.com/${url}`)
   const reqData = await fetch(`https://api.covid19api.com/${url}`)
   const resData = await reqData.json();
   return resData;
@@ -43,8 +44,9 @@ export function app(): express.Express {
   })
 
   // Returns all cases by case type for a country. Country must be the slug from /countries or /summary. Cases must be one of: confirmed, recovered, deaths
-  server.get('/api/covid19/countries', async (req, res) => {
-    const resData = await fetcher(`/total/country${req.query['slug']}`)
+  server.get('/api/covid19/country/:slug', async (req, res) => {
+    console.log(req.params)
+    const resData = await fetcher(`total/country/${req.params['slug']}`)
     res.json(resData);
   })
   // Serve static files from /browser
