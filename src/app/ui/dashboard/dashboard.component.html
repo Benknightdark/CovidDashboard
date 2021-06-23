@@ -1,10 +1,14 @@
 <div class="p-d-flex  p-jc-center">
-  <p-tag icon="pi pi-clock" value="最近更新時間：{{(global$|async)?.Date| date:'YYYY/MM/dd HH:mm:ss'}}" severity="success">
+  <p-tag
+  icon="pi pi-clock"
+  value="最近更新時間：{{(global$|async)?.Date| date:'YYYY/MM/dd HH:mm:ss'}}"
+  severity="success">
   </p-tag>
-  <h3>全球總計</h3>
 </div>
 
 <div class="p-grid p-m-3">
+  <span class="p-col-12">全球總計</span>
+
   <div class="p-col-12 p-md-6 p-lg-2">
     <p-panel header="{{columnDisplayArray['NewConfirmed']}}">
       <h4 class="p-m-0" pTooltip={{(global$|async)?.NewConfirmed}} tooltipPosition="bottom">
@@ -58,8 +62,10 @@
 
   <div class="p-col-12">
     <div class="card">
-      <p-table [value]="countriesCurrent" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10,25,50]" [scrollable]="true">
+      <p-table #dt1 [value]="countriesCurrent" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10,25,50]" [scrollable]="true"
+        [globalFilterFields]="['Country']"
+        >
         <ng-template pTemplate="colgroup" let-columns>
           <colgroup>
             <col style="width:250px">
@@ -79,7 +85,9 @@
             <span>全球最新疫情狀況</span>
             <span class="p-input-icon-left p-ml-auto">
               <i class="pi pi-search"></i>
-              <input pInputText type="text" placeholder="關鍵字搜尋" />
+              <input pInputText type="text" placeholder="關鍵字搜尋"
+              (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+              />
             </span>
           </div>
         </ng-template>
@@ -97,7 +105,10 @@
         </ng-template>
         <ng-template pTemplate="body" let-country>
           <tr>
-            <td>{{country.Country}}</td>
+            <td>
+              <img width="30"
+              src="https://flagpedia.net/data/flags/normal/{{country['CountryCode'].toLowerCase()}}.png"/>
+              {{country.Country}}</td>
             <td pTooltip={{country.NewConfirmed}}>{{country.NewConfirmed| shortNumber}}</td>
             <td pTooltip={{country.TotalConfirmed}}>{{country.TotalConfirmed| shortNumber}}</td>
             <td pTooltip={{country.NewDeaths}}>{{country.NewDeaths| shortNumber}}</td>
