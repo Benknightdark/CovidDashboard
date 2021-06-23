@@ -25,6 +25,7 @@
     "@angular/platform-server": "~12.0.5",
     "@angular/router": "~12.0.5",
     "@nguniversal/express-engine": "^12.0.2",
+    "canvasjs": "^1.8.3",
     "cross-fetch": "^3.1.4",
     "express": "^4.15.2",
     "primeflex": "^2.0.0",

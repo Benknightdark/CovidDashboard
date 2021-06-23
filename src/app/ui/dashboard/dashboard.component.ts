@@ -43,6 +43,9 @@ export class DashboardComponent implements OnInit {
   showBasicDialog2(slug:string) {
     console.log(slug)
     this.countryHistory$ = this.dashBoardService.country(slug);
+    // this.countryHistory$.subscribe(a=>{
+    //   console.log(a)
+    // })
     this.displayBasic2 = true;
 }
 
