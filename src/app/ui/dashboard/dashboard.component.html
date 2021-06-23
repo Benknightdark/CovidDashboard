@@ -93,14 +93,14 @@
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
-            <th>國家</th>
-            <th>{{columnDisplayArray['NewConfirmed']}}</th>
-            <th>{{columnDisplayArray['TotalConfirmed']}}</th>
-            <th>{{columnDisplayArray['NewDeaths']}}</th>
-            <th>{{columnDisplayArray['TotalDeaths']}}</th>
-            <th>{{columnDisplayArray['NewRecovered']}}</th>
-            <th>{{columnDisplayArray['TotalRecovered']}}</th>
-            <th>最近更新時間</th>
+            <th pSortableColumn="Country">國家<p-sortIcon field="Country"></p-sortIcon></th>
+            <th pSortableColumn="NewConfirmed">{{columnDisplayArray['NewConfirmed']}}<p-sortIcon field="NewConfirmed"></p-sortIcon></th>
+            <th pSortableColumn="TotalConfirmed">{{columnDisplayArray['TotalConfirmed']}}<p-sortIcon field="TotalConfirmed"></p-sortIcon></th>
+            <th pSortableColumn="NewDeaths">{{columnDisplayArray['NewDeaths']}}<p-sortIcon field="NewDeaths"></p-sortIcon></th>
+            <th pSortableColumn="TotalDeaths">{{columnDisplayArray['TotalDeaths']}}<p-sortIcon field="TotalDeaths"></p-sortIcon></th>
+            <th pSortableColumn="NewRecovered">{{columnDisplayArray['NewRecovered']}}<p-sortIcon field="NewRecovered"></p-sortIcon></th>
+            <th pSortableColumn="TotalRecovered">{{columnDisplayArray['TotalRecovered']}}<p-sortIcon field="TotalRecovered"></p-sortIcon></th>
+            <th pSortableColumn="DateTime">最近更新時間<p-sortIcon field="DateTime"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-country>
