@@ -11,6 +11,12 @@ import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareModule } from '../share/share.module';
+import { TooltipModule } from 'primeng/tooltip';
+import { TagModule } from 'primeng/tag';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import {DividerModule} from 'primeng/divider';
 
 const routes: Routes = [
   {
@@ -31,10 +37,8 @@ const routes: Routes = [
     ButtonModule,
     SplitButtonModule,
     AvatarModule, CardModule,
-    PanelModule,BrowserAnimationsModule,ShareModule
+    PanelModule, BrowserAnimationsModule, ShareModule, TooltipModule, TagModule, TableModule,InputTextModule,InputNumberModule,DividerModule
   ],
-  exports: [RouterModule, ToolbarModule,
-    ButtonModule,
-    SplitButtonModule, AvatarModule, CardModule, PanelModule,BrowserAnimationsModule]
+  exports: [RouterModule, ToolbarModule, ButtonModule]
 })
 export class UiModule { }

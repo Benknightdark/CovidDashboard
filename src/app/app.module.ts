@@ -4,8 +4,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ShareModule } from './share/share.module';
-import { ShortNumberPipe } from './share/short-number.pipe';
 
 
 @NgModule({

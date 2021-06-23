@@ -1,38 +1,43 @@
+<div class="p-d-flex  p-jc-center">
+  <p-tag icon="pi pi-clock" value="最近更新時間：{{(global$|async)?.Date| date:'YYYY/MM/dd HH:mm:ss'}}" severity="success">
+  </p-tag>
+</div>
+
 <div class="p-grid p-m-3">
   <div class="p-col-12 p-md-6 p-lg-2">
-    <p-panel header="NewConfirmed">
-      <h4 class="p-m-0">
+    <p-panel header="{{columnDisplayArray['NewConfirmed']}}">
+      <h4 class="p-m-0" pTooltip={{(global$|async)?.NewConfirmed}} tooltipPosition="bottom">
         {{(global$|async)?.NewConfirmed| shortNumber}}
       </h4>
     </p-panel>
   </div>
   <div class="p-col-12 p-md-6 p-lg-2">
-    <p-panel header="TotalConfirmed">
-      <h4 class="p-m-0">
+    <p-panel header="{{columnDisplayArray['TotalConfirmed']}}">
+      <h4 class="p-m-0" pTooltip={{(global$|async)?.TotalConfirmed}} tooltipPosition="bottom">
         {{(global$|async)?.TotalConfirmed| shortNumber}}
       </h4>
     </p-panel>
   </div>
 
   <div class="p-col-12 p-md-6 p-lg-2">
-    <p-panel header="NewDeaths">
-      <h4 class="p-m-0">
+    <p-panel header="{{columnDisplayArray['NewDeaths']}}">
+      <h4 class="p-m-0" pTooltip={{(global$|async)?.NewDeaths}} tooltipPosition="bottom">
         {{(global$|async)?.NewDeaths| shortNumber}}
       </h4>
     </p-panel>
   </div>
 
   <div class="p-col-12 p-md-6 p-lg-2">
-    <p-panel header="TotalDeaths">
-      <h4 class="p-m-0">
+    <p-panel header="{{columnDisplayArray['TotalDeaths']}}">
+      <h4 class="p-m-0" pTooltip={{(global$|async)?.TotalDeaths}} tooltipPosition="bottom">
         {{(global$|async)?.TotalDeaths| shortNumber}}
       </h4>
     </p-panel>
   </div>
 
   <div class="p-col-12 p-md-6 p-lg-2">
-    <p-panel header="NewRecovered">
-      <h4 class="p-m-0">
+    <p-panel header="{{columnDisplayArray['NewRecovered']}}">
+      <h4 class="p-m-0" pTooltip={{(global$|async)?.NewRecovered}} tooltipPosition="bottom">
         {{(global$|async)?.NewRecovered| shortNumber}}
       </h4>
     </p-panel>
@@ -40,10 +45,66 @@
 
 
   <div class="p-col-12 p-md-6 p-lg-2">
-    <p-panel header="TotalRecovered">
-      <h4 class="p-m-0">
+    <p-panel header="{{columnDisplayArray['TotalRecovered']}}">
+      <h4 class="p-m-0" pTooltip={{(global$|async)?.TotalRecovered}} tooltipPosition="bottom">
         {{(global$|async)?.TotalRecovered| shortNumber}}
       </h4>
     </p-panel>
+  </div>
+  <p-divider></p-divider>
+
+  <div class="p-col-12">
+    <div class="card">
+      <p-table [value]="countriesCurrent" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10,25,50]" [scrollable]="true">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="caption">
+
+          <div class="p-d-flex">
+            <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" ></button> -->
+            <span>全球最新疫情狀況</span>
+            <span class="p-input-icon-left p-ml-auto">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" placeholder="關鍵字搜尋" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>國家</th>
+            <th>{{columnDisplayArray['NewConfirmed']}}</th>
+            <th>{{columnDisplayArray['TotalConfirmed']}}</th>
+            <th>{{columnDisplayArray['NewDeaths']}}</th>
+            <th>{{columnDisplayArray['TotalDeaths']}}</th>
+            <th>{{columnDisplayArray['NewRecovered']}}</th>
+            <th>{{columnDisplayArray['TotalRecovered']}}</th>
+            <th>最近更新時間</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-country>
+          <tr>
+            <td>{{country.Country}}</td>
+            <td pTooltip={{country.NewConfirmed}}>{{country.NewConfirmed| shortNumber}}</td>
+            <td pTooltip={{country.TotalConfirmed}}>{{country.TotalConfirmed| shortNumber}}</td>
+            <td pTooltip={{country.NewDeaths}}>{{country.NewDeaths| shortNumber}}</td>
+            <td pTooltip={{country.TotalDeaths}}>{{country.TotalDeaths| shortNumber}}</td>
+            <td pTooltip={{country.NewRecovered}}>{{country.NewRecovered| shortNumber}}</td>
+            <td pTooltip={{country.TotalRecovered}}>{{country.TotalRecovered| shortNumber}}</td>
+            <td>{{country.Date| date:'YYYY/MM/dd HH:mm:ss'}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
 </div>

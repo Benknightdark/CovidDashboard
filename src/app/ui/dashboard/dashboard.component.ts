@@ -2,9 +2,8 @@ import { Global, Country, Summary, CountryList } from './../../models/data';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { DashboardService } from '../../services/dashboard.service';
-import { map, share } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, retry, share } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { CountryHistory } from '../../models/data';
 
 @Component({
@@ -14,20 +13,28 @@ import { CountryHistory } from '../../models/data';
 })
 export class DashboardComponent implements OnInit {
   global$: Observable<Global> = of<Global>();
-  countriesCurrent$: Observable<Country[]> = of<Country[]>();
+  countriesCurrent: Country[] = [];
   countryList$: Observable<CountryList[]> = of<CountryList[]>();
   countryHistory$: Observable<CountryHistory[]> = of<CountryHistory[]>();
+  columnDisplayArray = {
+    NewConfirmed: "最新確診人數",
+    TotalConfirmed: "總確診人數",
+    NewDeaths: "最新死亡人數",
+    TotalDeaths: "總死亡人數",
+    NewRecovered: "最新康復人數",
+    TotalRecovered: "總康復人數"
+  }
   constructor(private dashBoardService: DashboardService) {
-    const summaryData = dashBoardService.summary().pipe(share());
-    this.global$ = summaryData.pipe(map(a => a.Global));
-    this.countriesCurrent$ = summaryData.pipe(map(a => a.Countries));
-    this.countryList$ = dashBoardService.countryList();
     // this.countryHistory$ = dashBoardService.country('south-africa');
   }
-
-
-  ngOnInit(): void {
-
+  async ngOnInit(): Promise<void> {
+    const summaryData = this.dashBoardService.summary().pipe(share(),
+      debounceTime(300),
+      distinctUntilChanged(),
+      retry(5));
+    this.global$ = summaryData.pipe(map(a => a.Global));
+    this.countriesCurrent = (await summaryData.pipe(map(a => a.Countries)).toPromise());
+    this.countryList$ = this.dashBoardService.countryList();
   }
 
 }
