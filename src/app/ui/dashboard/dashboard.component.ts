@@ -17,12 +17,12 @@ export class DashboardComponent implements OnInit {
   countryList$: Observable<CountryList[]> = of<CountryList[]>();
   countryHistory$: Observable<CountryHistory[]> = of<CountryHistory[]>();
   columnDisplayArray = {
-    NewConfirmed: "最新確診人數",
-    TotalConfirmed: "總確診人數",
-    NewDeaths: "最新死亡人數",
-    TotalDeaths: "總死亡人數",
-    NewRecovered: "最新康復人數",
-    TotalRecovered: "總康復人數"
+    NewConfirmed: "每日最新確診人數",
+    TotalConfirmed: "每日總確診人數",
+    NewDeaths: "每日最新死亡人數",
+    TotalDeaths: "每日總死亡人數",
+    NewRecovered: "每日最新康復人數",
+    TotalRecovered: "每日總康復人數"
   }
   constructor(private dashBoardService: DashboardService) {
     // this.countryHistory$ = dashBoardService.country('south-africa');

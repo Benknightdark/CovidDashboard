@@ -1,6 +1,7 @@
 <div class="p-d-flex  p-jc-center">
   <p-tag icon="pi pi-clock" value="最近更新時間：{{(global$|async)?.Date| date:'YYYY/MM/dd HH:mm:ss'}}" severity="success">
   </p-tag>
+  <h3>全球總計</h3>
 </div>
 
 <div class="p-grid p-m-3">
@@ -51,7 +52,9 @@
       </h4>
     </p-panel>
   </div>
-  <p-divider></p-divider>
+  <div class="p-col-12">
+    <p-divider></p-divider>
+  </div>
 
   <div class="p-col-12">
     <div class="card">
