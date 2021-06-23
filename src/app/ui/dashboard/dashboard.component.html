@@ -4,7 +4,7 @@
       <ng-template pTemplate="header">
         Header content here
       </ng-template>
-      Body Content
+     {{ global$ |async|json}}
       <ng-template pTemplate="footer">
         Footer content here
       </ng-template>
@@ -15,7 +15,7 @@
       <ng-template pTemplate="header">
         Header content here
       </ng-template>
-      Body Content
+      {{ countries$ |async|json}}
       <ng-template pTemplate="footer">
         Footer content here
       </ng-template>
