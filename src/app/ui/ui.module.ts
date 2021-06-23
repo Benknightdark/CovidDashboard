@@ -17,7 +17,9 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import {DividerModule} from 'primeng/divider';
-
+import { DialogModule } from 'primeng/dialog';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 const routes: Routes = [
   {
     path: 'notfound',
@@ -37,7 +39,7 @@ const routes: Routes = [
     ButtonModule,
     SplitButtonModule,
     AvatarModule, CardModule,
-    PanelModule, BrowserAnimationsModule, ShareModule, TooltipModule, TagModule, TableModule,InputTextModule,InputNumberModule,DividerModule
+    PanelModule, BrowserAnimationsModule, ShareModule, TooltipModule, TagModule, TableModule,InputTextModule,InputNumberModule,DividerModule,DialogModule,MessagesModule,MessageModule
   ],
   exports: [RouterModule, ToolbarModule, ButtonModule]
 })
