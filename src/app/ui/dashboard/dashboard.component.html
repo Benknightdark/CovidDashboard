@@ -1,35 +1,49 @@
-<div class="p-d-flex p-jc-center">
-  <div class="p-mb-4 p-lg-4 p-mb-lg-3">
-    <p-card>
-      <ng-template pTemplate="header">
-        Header content here
-      </ng-template>
-     {{ global$ |async|json}}
-      <ng-template pTemplate="footer">
-        Footer content here
-      </ng-template>
-    </p-card>
+<div class="p-grid p-m-3">
+  <div class="p-col-12 p-md-6 p-lg-2">
+    <p-panel header="NewConfirmed">
+      <h4 class="p-m-0">
+        {{(global$|async)?.NewConfirmed| shortNumber}}
+      </h4>
+    </p-panel>
   </div>
-  <div class="p-mb-4 p-lg-4 p-mb-lg-3">
-    <p-card>
-      <ng-template pTemplate="header">
-        Header content here
-      </ng-template>
-      {{ countries$ |async|json}}
-      <ng-template pTemplate="footer">
-        Footer content here
-      </ng-template>
-    </p-card>
+  <div class="p-col-12 p-md-6 p-lg-2">
+    <p-panel header="TotalConfirmed">
+      <h4 class="p-m-0">
+        {{(global$|async)?.TotalConfirmed| shortNumber}}
+      </h4>
+    </p-panel>
   </div>
-  <div class="p-mb-2 p-lg-4 p-mb-lg-3">
-    <p-card>
-      <ng-template pTemplate="header">
-        Header content here
-      </ng-template>
-      Body Content
-      <ng-template pTemplate="footer">
-        Footer content here
-      </ng-template>
-    </p-card>
+
+  <div class="p-col-12 p-md-6 p-lg-2">
+    <p-panel header="NewDeaths">
+      <h4 class="p-m-0">
+        {{(global$|async)?.NewDeaths| shortNumber}}
+      </h4>
+    </p-panel>
+  </div>
+
+  <div class="p-col-12 p-md-6 p-lg-2">
+    <p-panel header="TotalDeaths">
+      <h4 class="p-m-0">
+        {{(global$|async)?.TotalDeaths| shortNumber}}
+      </h4>
+    </p-panel>
+  </div>
+
+  <div class="p-col-12 p-md-6 p-lg-2">
+    <p-panel header="NewRecovered">
+      <h4 class="p-m-0">
+        {{(global$|async)?.NewRecovered| shortNumber}}
+      </h4>
+    </p-panel>
+  </div>
+
+
+  <div class="p-col-12 p-md-6 p-lg-2">
+    <p-panel header="TotalRecovered">
+      <h4 class="p-m-0">
+        {{(global$|async)?.TotalRecovered| shortNumber}}
+      </h4>
+    </p-panel>
   </div>
 </div>
