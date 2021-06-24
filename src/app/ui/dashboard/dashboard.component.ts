@@ -1,11 +1,11 @@
-import { Global, Country, Summary, CountryList } from './../../models/data';
+import { Global, Country, CountryList } from './../../models/data';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { DashboardService } from '../../services/dashboard.service';
 import { debounceTime, distinctUntilChanged, map, retry, share } from 'rxjs/operators';
-import { of } from 'rxjs/internal/observable/of';
 import { CountryHistory } from '../../models/data';
 import * as Highcharts from 'highcharts';
+import { of } from 'rxjs/internal/observable/of';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,14 +14,23 @@ import * as Highcharts from 'highcharts';
 })
 export class DashboardComponent implements OnInit {
   Highcharts = Highcharts;
-  chartOptions: Highcharts.Options = {}
+  chartOptions: Highcharts.Options = {
+    series: [
+      {
+        type: 'area',
+        name: 'Confirmed111',
+        data: [[0,0]]
+      },
+    ]
+  }
+  shoLoading:Boolean=false;
   global$: Observable<Global> = of<Global>();
   message$: Observable<string> = of<string>();
   countriesCurrent: Country[] = [];
   countryList$: Observable<CountryList[]> = of<CountryList[]>();
   countryHistory$: Observable<CountryHistory[]> = of<CountryHistory[]>();
   displayBasic2: boolean = false;
-  display:boolean=false;
+  display: boolean = false;
   columnDisplayArray = {
     NewConfirmed: "每日最新確診人數",
     TotalConfirmed: "每日總確診人數",
@@ -43,10 +52,13 @@ export class DashboardComponent implements OnInit {
     this.countriesCurrent = (await summaryData.pipe(map(a => a.Countries)).toPromise());
     this.countryList$ = this.dashBoardService.countryList();
   }
-  async showBasicDialog2(slug: string) {
+   showBasicDialog2(slug: string) {
+    this.shoLoading=true;
+    this.displayBasic2 = true;
+
     this.countryHistory$ = this.dashBoardService.country(slug);
-    this.chartOptions = await this.countryHistory$.pipe(map(a => {
-      return {
+     this.countryHistory$.pipe(map(a => {
+      this.chartOptions = {
         chart: {
           zoomType: 'x'
         },
@@ -67,7 +79,6 @@ export class DashboardComponent implements OnInit {
         },
         plotOptions: {
           area: {
-
             marker: {
               radius: 2
             },
@@ -113,12 +124,13 @@ export class DashboardComponent implements OnInit {
           //   })
           // }
         ]
-      }
-    })).toPromise() as Highcharts.Options;
+      };
+      this.shoLoading=false;
+
+    })).subscribe();
 
     // console.log(this.chartOptions)
 
-    this.displayBasic2 = true;
 
   }
 

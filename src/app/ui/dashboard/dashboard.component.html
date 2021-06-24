@@ -138,8 +138,7 @@
   </div>
 
   <p-dialog header="歷史資料" [(visible)]="displayBasic2" [baseZIndex]="10000">
-    <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"
-      ></highcharts-chart>
+    <p-progressSpinner *ngIf="shoLoading"></p-progressSpinner>
+    <highcharts-chart *ngIf="!shoLoading" [Highcharts]="Highcharts" [options]="chartOptions"></highcharts-chart>
   </p-dialog>
 </ng-template>
-
