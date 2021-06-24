@@ -2,7 +2,7 @@ import { Global, Country, CountryList } from './../../models/data';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { DashboardService } from '../../services/dashboard.service';
-import { debounceTime, distinctUntilChanged, map, retry, share } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, retry, share } from 'rxjs/operators';
 import { CountryHistory } from '../../models/data';
 import * as Highcharts from 'highcharts';
 import { of } from 'rxjs/internal/observable/of';
@@ -19,11 +19,38 @@ export class DashboardComponent implements OnInit {
       {
         type: 'area',
         name: 'Confirmed111',
-        data: [[0,0]]
+        data: [[0, 0]]
       },
     ]
   }
-  shoLoading:Boolean=false;
+  chartOptions2: Highcharts.Options = {
+    series: [
+      {
+        type: 'area',
+        name: 'Confirmed111',
+        data: [[0, 0]]
+      },
+    ]
+  }
+  chartOptions3: Highcharts.Options = {
+    series: [
+      {
+        type: 'area',
+        name: 'Confirmed111',
+        data: [[0, 0]]
+      },
+    ]
+  }
+  chartOptions4: Highcharts.Options = {
+    series: [
+      {
+        type: 'area',
+        name: 'Confirmed111',
+        data: [[0, 0]]
+      },
+    ]
+  }
+  shoLoading: Boolean = false;
   global$: Observable<Global> = of<Global>();
   message$: Observable<string> = of<string>();
   countriesCurrent: Country[] = [];
@@ -52,82 +79,103 @@ export class DashboardComponent implements OnInit {
     this.countriesCurrent = (await summaryData.pipe(map(a => a.Countries)).toPromise());
     this.countryList$ = this.dashBoardService.countryList();
   }
-   showBasicDialog2(slug: string) {
-    this.shoLoading=true;
+  showBasicDialog2(slug: string) {
+    this.shoLoading = true;
     this.displayBasic2 = true;
+    const rootOptions = {
+      chart: {
+        zoomType: 'x'
+      },
+      title: {
+        text: ''
+      },
 
-    this.countryHistory$ = this.dashBoardService.country(slug);
-     this.countryHistory$.pipe(map(a => {
-      this.chartOptions = {
-        chart: {
-          zoomType: 'x'
-        },
+      xAxis: {
+        type: 'datetime'
+      },
+      yAxis: {
         title: {
-          text: 'history'
-        },
-
-        xAxis: {
-          type: 'datetime'
-        },
-        yAxis: {
-          title: {
-            text: 'Count'
-          }
-        },
-        legend: {
-          enabled: false
-        },
-        plotOptions: {
-          area: {
-            marker: {
-              radius: 2
-            },
-            lineWidth: 1,
-            states: {
-              hover: {
-                lineWidth: 1
-              }
-            },
-            threshold: null
-          }
-        },
-        credits: {
-          enabled: false
-        },
-        series: [
-          // {
-          //   type: 'area',
-          //   name: 'Deaths',
-          //   data: a.map(data => {
-          //     return [new Date(data.Date).getTime(), data.Deaths]
-          //   })
-          // },
-          {
-            type: 'area',
-            name: 'Confirmed',
-            data: a.map(data => {
-              return [new Date(data.Date).getTime(), data.Confirmed]
-            })
+          text: 'Count'
+        }
+      },
+      legend: {
+        enabled: true
+      },
+      plotOptions: {
+        area: {
+          marker: {
+            radius: 2
           },
-          // {
-          //   type: 'area',
-          //   name: 'Recovered',
-          //   data: a.map(data => {
-          //     return [new Date(data.Date).getTime(), data.Recovered]
-          //   })
-          // },
-          // {
-          //   type: 'area',
-          //   name: 'Active',
-          //   data: a.map(data => {
-          //     return [new Date(data.Date).getTime(), data.Active]
-          //   })
-          // }
-        ]
-      };
-      this.shoLoading=false;
+          lineWidth: 1,
+          states: {
+            hover: {
+              lineWidth: 1
+            }
+          },
+          threshold: null
+        }
+      },
+      credits: {
+        enabled: false
+      },
+      series: [
+      ]
+    }
+    this.countryHistory$ = this.dashBoardService.country(slug);
+    this.countryHistory$.pipe(map(a => {
+      const r1 = rootOptions
+      r1.title.text = 'Deaths';
+      (r1.series as any[]).push({
+        type: 'area',
+        name: 'Deaths',
+        data: a.map(data => {
+          return [new Date(data.Date).getTime(), data.Deaths]
+        })
+      })
+      this.chartOptions=r1 as Highcharts.Options;
 
-    })).subscribe();
+      const r2 = rootOptions
+      r2.title.text = 'Confirmed';
+      (r2.series as any[]).push({
+        type: 'area',
+        name: 'Confirmed',
+        data: a.map(data => {
+          return [new Date(data.Date).getTime(), data.Confirmed]
+        })
+      })
+      this.chartOptions2=r2 as Highcharts.Options;
+
+      const r3 = rootOptions
+      r3.title.text = 'Recovered';
+      (r3.series as any[]).push({
+        type: 'area',
+        name: 'Recovered',
+        data: a.map(data => {
+          return [new Date(data.Date).getTime(), data.Recovered]
+        })
+      })
+      this.chartOptions3=r3 as Highcharts.Options;
+
+
+
+      const r4 = rootOptions
+      r4.title.text = 'Active';
+      (r4.series as any[]).push({
+        type: 'area',
+        name: 'Active',
+        data: a.map(data => {
+          return [new Date(data.Date).getTime(), data.Active]
+        })
+      })
+      this.chartOptions4=r4 as Highcharts.Options;
+
+      this.shoLoading = false;
+    }), catchError(err => {
+      this.shoLoading = false;
+      console.error(err)
+      return of({})
+    }),
+    ).subscribe();
 
     // console.log(this.chartOptions)
 
