@@ -17,34 +17,7 @@ export class DashboardComponent implements OnInit {
   chartOptions: Highcharts.Options = {
     series: [
       {
-        type: 'area',
-        name: 'Confirmed111',
-        data: [[0, 0]]
-      },
-    ]
-  }
-  chartOptions2: Highcharts.Options = {
-    series: [
-      {
-        type: 'area',
-        name: 'Confirmed111',
-        data: [[0, 0]]
-      },
-    ]
-  }
-  chartOptions3: Highcharts.Options = {
-    series: [
-      {
-        type: 'area',
-        name: 'Confirmed111',
-        data: [[0, 0]]
-      },
-    ]
-  }
-  chartOptions4: Highcharts.Options = {
-    series: [
-      {
-        type: 'area',
+        type: 'line',
         name: 'Confirmed111',
         data: [[0, 0]]
       },
@@ -80,8 +53,6 @@ export class DashboardComponent implements OnInit {
     this.countryList$ = this.dashBoardService.countryList();
   }
   showBasicDialog2(slug: string) {
-    this.shoLoading = true;
-    this.displayBasic2 = true;
     const rootOptions = {
       chart: {
         zoomType: 'x'
@@ -121,55 +92,45 @@ export class DashboardComponent implements OnInit {
       series: [
       ]
     }
+    this.displayBasic2 = true;
+    this.shoLoading=true;
     this.countryHistory$ = this.dashBoardService.country(slug);
     this.countryHistory$.pipe(map(a => {
       const r1 = rootOptions
-      r1.title.text = 'Deaths';
+      r1.title.text = slug;
+     (r1.series as any[])=[];
       (r1.series as any[]).push({
-        type: 'area',
-        name: 'Deaths',
+        type: 'line',
+        name: '每日總死亡人數',
         data: a.map(data => {
           return [new Date(data.Date).getTime(), data.Deaths]
         })
-      })
-      this.chartOptions=r1 as Highcharts.Options;
-
-      const r2 = rootOptions
-      r2.title.text = 'Confirmed';
-      (r2.series as any[]).push({
-        type: 'area',
-        name: 'Confirmed',
+      });
+      (r1.series as any[]).push({
+        type: 'line',
+        name: '每日總確診人數',
         data: a.map(data => {
           return [new Date(data.Date).getTime(), data.Confirmed]
         })
-      })
-      this.chartOptions2=r2 as Highcharts.Options;
-
-      const r3 = rootOptions
-      r3.title.text = 'Recovered';
-      (r3.series as any[]).push({
-        type: 'area',
-        name: 'Recovered',
+      });
+      (r1.series as any[]).push({
+        type: 'line',
+        name: '每日總康復人數',
         data: a.map(data => {
           return [new Date(data.Date).getTime(), data.Recovered]
         })
-      })
-      this.chartOptions3=r3 as Highcharts.Options;
-
-
-
-      const r4 = rootOptions
-      r4.title.text = 'Active';
-      (r4.series as any[]).push({
-        type: 'area',
+      });
+      (r1.series as any[]).push({
+        type: 'line',
         name: 'Active',
         data: a.map(data => {
           return [new Date(data.Date).getTime(), data.Active]
         })
-      })
-      this.chartOptions4=r4 as Highcharts.Options;
-
+      });
+      this.chartOptions = r1 as Highcharts.Options;
       this.shoLoading = false;
+
+
     }), catchError(err => {
       this.shoLoading = false;
       console.error(err)
