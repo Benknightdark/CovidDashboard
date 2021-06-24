@@ -138,12 +138,8 @@
   </div>
 
   <p-dialog header="歷史資料" [(visible)]="displayBasic2" [baseZIndex]="10000">
-<p>
-  {{countryHistory$|async|json}}
-</p>
-    <!-- <ng-template pTemplate="footer">
-      <p-button icon="pi pi-check" (click)="displayBasic2=false" label="Yes" class="p-button-text"></p-button>
-      <p-button icon="pi pi-times" (click)="displayBasic2=false" label="No"></p-button>
-  </ng-template> -->
+    <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"
+      ></highcharts-chart>
   </p-dialog>
 </ng-template>
+

@@ -20,6 +20,10 @@ import {DividerModule} from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import { HighchartsChartModule } from 'highcharts-angular';
+
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+
 const routes: Routes = [
   {
     path: 'notfound',
@@ -39,7 +43,8 @@ const routes: Routes = [
     ButtonModule,
     SplitButtonModule,
     AvatarModule, CardModule,
-    PanelModule, BrowserAnimationsModule, ShareModule, TooltipModule, TagModule, TableModule,InputTextModule,InputNumberModule,DividerModule,DialogModule,MessagesModule,MessageModule
+    PanelModule, BrowserAnimationsModule, ShareModule, TooltipModule, TagModule, TableModule,InputTextModule,InputNumberModule,DividerModule,DialogModule,MessagesModule,MessageModule,
+    HighchartsChartModule,ProgressSpinnerModule
   ],
   exports: [RouterModule, ToolbarModule, ButtonModule]
 })

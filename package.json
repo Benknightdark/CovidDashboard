@@ -28,6 +28,7 @@
     "canvasjs": "^1.8.3",
     "cross-fetch": "^3.1.4",
     "express": "^4.15.2",
+    "highcharts-angular": "^2.10.0",
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",
     "primeng": "^12.0.0",
