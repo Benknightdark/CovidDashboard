@@ -15,6 +15,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.0.5",
+    "@angular/cdk": "^12.0.5",
     "@angular/common": "~12.0.5",
     "@angular/compiler": "~12.0.5",
     "@angular/core": "~12.0.5",
@@ -24,8 +25,10 @@
     "@angular/platform-server": "~12.0.5",
     "@angular/router": "~12.0.5",
     "@nguniversal/express-engine": "^12.0.2",
+    "canvasjs": "^1.8.3",
     "cross-fetch": "^3.1.4",
     "express": "^4.15.2",
+    "highcharts-angular": "^2.10.0",
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",
     "primeng": "^12.0.0",

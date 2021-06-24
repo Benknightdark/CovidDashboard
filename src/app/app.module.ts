@@ -15,7 +15,6 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     HttpClientModule,
     UiModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]

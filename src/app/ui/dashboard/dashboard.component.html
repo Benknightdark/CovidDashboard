@@ -1,35 +1,144 @@
-<div class="p-d-flex p-jc-center">
-  <div class="p-mb-4 p-lg-4 p-mb-lg-3">
-    <p-card>
-      <ng-template pTemplate="header">
-        Header content here
-      </ng-template>
-      Body Content
-      <ng-template pTemplate="footer">
-        Footer content here
-      </ng-template>
-    </p-card>
-  </div>
-  <div class="p-mb-4 p-lg-4 p-mb-lg-3">
-    <p-card>
-      <ng-template pTemplate="header">
-        Header content here
-      </ng-template>
-      Body Content
-      <ng-template pTemplate="footer">
-        Footer content here
-      </ng-template>
-    </p-card>
-  </div>
-  <div class="p-mb-2 p-lg-4 p-mb-lg-3">
-    <p-card>
-      <ng-template pTemplate="header">
-        Header content here
-      </ng-template>
-      Body Content
-      <ng-template pTemplate="footer">
-        Footer content here
-      </ng-template>
-    </p-card>
-  </div>
+<div *ngIf="message$|async; else dashboard">
+  <p-messages detail="{message$|async}" severity="error" summary='Error'></p-messages>
 </div>
+<ng-template #dashboard>
+  <div class="p-d-flex  p-jc-center">
+    <p-tag icon="pi pi-clock" value="最近更新時間：{{(global$|async)?.Date| date:'YYYY/MM/dd HH:mm:ss'}}" severity="success">
+    </p-tag>
+  </div>
+
+  <div class="p-grid p-m-3">
+    <span class="p-col-12">全球總計</span>
+
+    <div class="p-col-12 p-md-6 p-lg-2">
+      <p-panel header="{{columnDisplayArray['NewConfirmed']}}">
+        <h4 class="p-m-0" pTooltip={{(global$|async)?.NewConfirmed}} tooltipPosition="bottom">
+          {{(global$|async)?.NewConfirmed| shortNumber}}
+        </h4>
+      </p-panel>
+    </div>
+    <div class="p-col-12 p-md-6 p-lg-2">
+      <p-panel header="{{columnDisplayArray['TotalConfirmed']}}">
+        <h4 class="p-m-0" pTooltip={{(global$|async)?.TotalConfirmed}} tooltipPosition="bottom">
+          {{(global$|async)?.TotalConfirmed| shortNumber}}
+        </h4>
+      </p-panel>
+    </div>
+
+    <div class="p-col-12 p-md-6 p-lg-2">
+      <p-panel header="{{columnDisplayArray['NewDeaths']}}">
+        <h4 class="p-m-0" pTooltip={{(global$|async)?.NewDeaths}} tooltipPosition="bottom">
+          {{(global$|async)?.NewDeaths| shortNumber}}
+        </h4>
+      </p-panel>
+    </div>
+
+    <div class="p-col-12 p-md-6 p-lg-2">
+      <p-panel header="{{columnDisplayArray['TotalDeaths']}}">
+        <h4 class="p-m-0" pTooltip={{(global$|async)?.TotalDeaths}} tooltipPosition="bottom">
+          {{(global$|async)?.TotalDeaths| shortNumber}}
+        </h4>
+      </p-panel>
+    </div>
+
+    <div class="p-col-12 p-md-6 p-lg-2">
+      <p-panel header="{{columnDisplayArray['NewRecovered']}}">
+        <h4 class="p-m-0" pTooltip={{(global$|async)?.NewRecovered}} tooltipPosition="bottom">
+          {{(global$|async)?.NewRecovered| shortNumber}}
+        </h4>
+      </p-panel>
+    </div>
+
+
+    <div class="p-col-12 p-md-6 p-lg-2">
+      <p-panel header="{{columnDisplayArray['TotalRecovered']}}">
+        <h4 class="p-m-0" pTooltip={{(global$|async)?.TotalRecovered}} tooltipPosition="bottom">
+          {{(global$|async)?.TotalRecovered| shortNumber}}
+        </h4>
+      </p-panel>
+    </div>
+    <div class="p-col-12">
+      <p-divider></p-divider>
+    </div>
+
+    <div class="p-col-12">
+      <div class="card">
+        <p-table #dt1 [value]="countriesCurrent" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[10,25,50]" [scrollable]="true" [globalFilterFields]="['Country']">
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width:250px">
+              <col style="width:250px">
+              <col style="width:250px">
+              <col style="width:250px">
+              <col style="width:250px">
+              <col style="width:250px">
+              <col style="width:250px">
+              <col style="width:250px">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+              <span>全球最新疫情狀況</span>
+              <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" placeholder="關鍵字搜尋"
+                  (input)="dt1.filterGlobal($any($event.target).value, 'contains')" />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="Country">國家<p-sortIcon field="Country"></p-sortIcon>
+              </th>
+              <th pSortableColumn="NewConfirmed">{{columnDisplayArray['NewConfirmed']}}<p-sortIcon field="NewConfirmed">
+                </p-sortIcon>
+              </th>
+              <th pSortableColumn="TotalConfirmed">{{columnDisplayArray['TotalConfirmed']}}<p-sortIcon
+                  field="TotalConfirmed"></p-sortIcon>
+              </th>
+              <th pSortableColumn="NewDeaths">{{columnDisplayArray['NewDeaths']}}<p-sortIcon field="NewDeaths">
+                </p-sortIcon>
+              </th>
+              <th pSortableColumn="TotalDeaths">{{columnDisplayArray['TotalDeaths']}}<p-sortIcon field="TotalDeaths">
+                </p-sortIcon>
+              </th>
+              <th pSortableColumn="NewRecovered">{{columnDisplayArray['NewRecovered']}}<p-sortIcon field="NewRecovered">
+                </p-sortIcon>
+              </th>
+              <th pSortableColumn="TotalRecovered">{{columnDisplayArray['TotalRecovered']}}<p-sortIcon
+                  field="TotalRecovered"></p-sortIcon>
+              </th>
+              <th pSortableColumn="DateTime">最近更新時間<p-sortIcon field="DateTime"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-country>
+            <tr>
+              <td>
+                <img width="30"
+                  src="https://flagpedia.net/data/flags/normal/{{country['CountryCode'].toLowerCase()}}.png" />
+                {{country.Country}}
+                <button pButton pRipple type="button" icon="pi pi-external-link" class="p-button-rounded p-button-text"
+                  (click)="showBasicDialog2(country.Slug)"></button>
+
+              </td>
+              <td pTooltip={{country.NewConfirmed}}>{{country.NewConfirmed| shortNumber}}</td>
+              <td pTooltip={{country.TotalConfirmed}}>{{country.TotalConfirmed| shortNumber}}</td>
+              <td pTooltip={{country.NewDeaths}}>{{country.NewDeaths| shortNumber}}</td>
+              <td pTooltip={{country.TotalDeaths}}>{{country.TotalDeaths| shortNumber}}</td>
+              <td pTooltip={{country.NewRecovered}}>{{country.NewRecovered| shortNumber}}</td>
+              <td pTooltip={{country.TotalRecovered}}>{{country.TotalRecovered| shortNumber}}</td>
+              <td>{{country.Date| date:'YYYY/MM/dd HH:mm:ss'}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+
+  <p-dialog header="歷史資料" [(visible)]="displayBasic2" [baseZIndex]="10000">
+    <p-progressSpinner *ngIf="shoLoading"></p-progressSpinner>
+    <highcharts-chart *ngIf="!shoLoading" [Highcharts]="Highcharts" [options]="chartOptions"></highcharts-chart>
+  </p-dialog>
+</ng-template>
