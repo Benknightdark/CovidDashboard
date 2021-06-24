@@ -44,11 +44,7 @@ export class DashboardComponent implements OnInit {
     this.countryList$ = this.dashBoardService.countryList();
   }
   async showBasicDialog2(slug: string) {
-    console.log(slug)
     this.countryHistory$ = this.dashBoardService.country(slug);
-    this.countryHistory$.subscribe(a => {
-      console.log(a)
-    })
     this.chartOptions = await this.countryHistory$.pipe(map(a => {
       return {
         chart: {
@@ -67,7 +63,7 @@ export class DashboardComponent implements OnInit {
           }
         },
         legend: {
-          enabled: true
+          enabled: false
         },
         plotOptions: {
           area: {
@@ -88,13 +84,13 @@ export class DashboardComponent implements OnInit {
           enabled: false
         },
         series: [
-          {
-            type: 'area',
-            name: 'Deaths',
-            data: a.map(data => {
-              return [new Date(data.Date).getTime(), data.Deaths]
-            })
-          },
+          // {
+          //   type: 'area',
+          //   name: 'Deaths',
+          //   data: a.map(data => {
+          //     return [new Date(data.Date).getTime(), data.Deaths]
+          //   })
+          // },
           {
             type: 'area',
             name: 'Confirmed',
@@ -102,25 +98,25 @@ export class DashboardComponent implements OnInit {
               return [new Date(data.Date).getTime(), data.Confirmed]
             })
           },
-          {
-            type: 'area',
-            name: 'Recovered',
-            data: a.map(data => {
-              return [new Date(data.Date).getTime(), data.Recovered]
-            })
-          },
-          {
-            type: 'area',
-            name: 'Active',
-            data: a.map(data => {
-              return [new Date(data.Date).getTime(), data.Active]
-            })
-          }
+          // {
+          //   type: 'area',
+          //   name: 'Recovered',
+          //   data: a.map(data => {
+          //     return [new Date(data.Date).getTime(), data.Recovered]
+          //   })
+          // },
+          // {
+          //   type: 'area',
+          //   name: 'Active',
+          //   data: a.map(data => {
+          //     return [new Date(data.Date).getTime(), data.Active]
+          //   })
+          // }
         ]
       }
     })).toPromise() as Highcharts.Options;
 
-    console.log(this.chartOptions)
+    // console.log(this.chartOptions)
 
     this.displayBasic2 = true;
 
