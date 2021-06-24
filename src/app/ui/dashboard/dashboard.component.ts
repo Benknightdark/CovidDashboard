@@ -129,8 +129,6 @@ export class DashboardComponent implements OnInit {
       });
       this.chartOptions = r1 as Highcharts.Options;
       this.shoLoading = false;
-
-
     }), catchError(err => {
       this.shoLoading = false;
       console.error(err)
